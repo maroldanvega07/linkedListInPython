@@ -11,16 +11,13 @@ class LinkedList:
 
     def add(self, data):
         n = Node(data)
-        h = self.head
-        n.next = h
+        n.next = self.head
         self.head = n
 
     def print(self):
         res = ""
         traverse = self.head
-
         while traverse:
-
             res += str(traverse.data) + ","
             traverse = traverse.next
         print(res)
@@ -28,14 +25,17 @@ class LinkedList:
     def delete(self,delete):
         current_node = self.head
         previous_node = self.head
-
         while current_node:
             if current_node.data == delete:
+                data = current_node.data
                 previous_node.next = current_node.next
-                return current_node.data
+                if current_node == self.head:
+                    self.head = current_node.next
+                current_node = None
+                return data
             previous_node = current_node
             current_node = current_node.next
-        return "none"
+        return None
 
     def search(self,key):
         current_node = self.head
@@ -53,7 +53,7 @@ class LinkedList:
         return h.data
 
     def is_empty(self):
-        if self.head == None:
+        if self.head is None:
             return True
         else:
             return False
@@ -63,15 +63,18 @@ class LinkedList:
 
 def main():
 
-    first_node = Node("1")
-    ll = LinkedList(first_node)
-    print(ll.is_empty())
+    #creating the list.
+    ll = LinkedList()
+
     ll.add(3)
+    ll.print()
     ll.add(4)
     ll.print()
-    print("Found 4?:" + str(ll.search(4)))
+
     ll.delete(3)
     ll.print()
+    ll.delete(4)
+    ll.print()
 
-
+#calling the main function
 main()
